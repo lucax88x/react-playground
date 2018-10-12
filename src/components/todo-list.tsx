@@ -21,7 +21,7 @@ export class TodoList extends React.Component<
     return (
       <div>
         <button onClick={this.onRefresh}>Refresh</button>        
-        <p>IsBusy: {this.props.isBusy}</p>
+        <p>IsBusy: {this.props.isBusy.toString()}</p>
         <ul>
           {map(
             todo => (

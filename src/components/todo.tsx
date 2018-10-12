@@ -1,13 +1,18 @@
 import React from 'react';
 
-interface ITodoPropTypes {
-  onClick: (id: number) => void;
+interface ITodoPropProps {
   id: number;
   completed: boolean;
   title: string;
 }
 
-export class Todo extends React.Component<ITodoPropTypes> {
+interface ITodoPropDispatches {
+  onClick: (id: number) => void;
+}
+
+export class Todo extends React.Component<
+  ITodoPropProps & ITodoPropDispatches
+> {
   public render() {
     return (
       <li
@@ -21,7 +26,7 @@ export class Todo extends React.Component<ITodoPropTypes> {
     );
   }
 
-  private handleOnClick() {
+  private handleOnClick = () => {
     this.props.onClick(this.props.id);
   }
 }

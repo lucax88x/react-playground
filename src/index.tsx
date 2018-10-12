@@ -12,11 +12,13 @@ import App from './app';
 import rootReducer from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 
-const logger = createLogger({});
+const logger = createLogger({
+  collapsed: true
+});
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(logger, thunk))
+  composeWithDevTools(applyMiddleware(thunk, logger))
 );
 
 ReactDOM.render(

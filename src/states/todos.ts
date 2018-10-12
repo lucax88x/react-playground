@@ -1,6 +1,7 @@
 import { TodoModel } from '../models/todo';
 
-export class TodosState {
-  public isTodosBusy = false;
-  public todos: TodoModel[] = [];
+export interface ITodosState {
+  isTodosBusy: boolean;
+  todos: TodoModel[];
 }
+

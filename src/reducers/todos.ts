@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import { map } from 'ramda';
 
 import { TodosActions } from '../actions';
@@ -8,52 +9,46 @@ import {
   GET_TODOS_SUCCESS,
   TOGGLE_TODO
 } from '../actions/todos';
-import { TodosState } from '../states/todos';
+import { ITodosState } from '../states/todos';
 
-const todos = (state = new TodosState(), action: TodosActions): TodosState => {
-  switch (action.type) {
-    case ADD_TODO:
-      return {
-        ...state,
-        todos: [
-          ...state.todos,
-          {
-            completed: false,
-            id: action.payload.id,
-            title: action.payload.title
-          }
-        ]
-      };
-    case TOGGLE_TODO:
-      return {
-        ...state,
-        todos: map(
-          todo =>
-            todo.id === action.payload
-              ? { ...todo, completed: !todo.completed }
-              : todo,
-          state.todos
-        )
-      };
-    case GET_TODOS:
-      return {
-        ...state,
-        isTodosBusy: true
-      };
-    case GET_TODOS_SUCCESS:
-      return {
-        ...state,
-        isTodosBusy: false,
-        todos: action.payload
-      };
-    case GET_TODOS_ERROR:
-      return {
-        ...state,
-        isTodosBusy: false
-      };
-    default:
-      return state;
-  }
+const initialTodosState: ITodosState = {
+  isTodosBusy: false,
+  todos: []
 };
+
+const todos = (state = initialTodosState, action: TodosActions): ITodosState =>
+  produce(state, draft => {
+    switch (action.type) {
+      case ADD_TODO:
+        draft.todos.push({
+          completed: false,
+          id: action.payload.id,
+          title: action.payload.title
+        });
+        return;
+      case TOGGLE_TODO:
+        // todo with immer
+        return {
+          ...state,
+          todos: map(
+            todo =>
+              todo.id === action.payload
+                ? { ...todo, completed: !todo.completed }
+                : todo,
+            state.todos
+          )
+        };
+      case GET_TODOS:
+        draft.isTodosBusy = true;
+        return;
+      case GET_TODOS_SUCCESS:
+        draft.isTodosBusy = false;
+        draft.todos = action.payload;
+        return;
+      case GET_TODOS_ERROR:
+        draft.isTodosBusy = false;
+        return;
+    }
+  });
 
 export default todos;

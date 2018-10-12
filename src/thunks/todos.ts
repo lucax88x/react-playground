@@ -1,6 +1,3 @@
-import { ActionCreator } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-
 import { TodosActions } from '../actions';
 import {
   getTodosAction,
@@ -8,27 +5,18 @@ import {
   getTodosSuccessAction
 } from '../actions/todos';
 import { callGetTodos } from '../services/todos';
-import { TodosState } from '../states/todos';
+import { ITodosState } from '../states/todos';
+import { Thunk } from '../types/thunk';
 
-// export async function getTodos() {
-//   return async (dispatch: Dispatch) => {
-//     try {
-//       const todos = await callGetTodos();
-//       dispatch(getTodosSuccessAction(todos.data));
-//     } catch (e) {
-//       // dispatch()
-//     }
-//   };
-// }
+export const getTodos: Thunk<TodosActions, ITodosState> = () => {
+  return async dispatch => {
+    dispatch(getTodosAction());
 
-export const getTodos: ActionCreator<
-  ThunkAction<Promise<TodosActions>, TodosState, null, TodosActions>
-> = () => {
-  return dispatch => {
-    dispatch(getTodosAction);
-
-    return callGetTodos()
-      .then(result => dispatch(getTodosSuccessAction(result.data)))
-      .catch(e => dispatch(getTodosErrorAction()));
+    try {
+      const result = await callGetTodos();
+      return dispatch(getTodosSuccessAction(result.data));
+    } catch (error) {
+      return dispatch(getTodosErrorAction());
+    }
   };
 };

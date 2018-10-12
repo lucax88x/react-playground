@@ -10,7 +10,7 @@ import {
 } from '../components/todo-list';
 import { selectIsTodosBusy, selectTodos } from '../selectors/todos';
 import { State } from '../states/state';
-import { TodosState } from '../states/todos';
+import { ITodosState } from '../states/todos';
 import { getTodos } from '../thunks/todos';
 
 const mapStateToProps = (state: State): ITodoListProps => ({
@@ -19,7 +19,7 @@ const mapStateToProps = (state: State): ITodoListProps => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: ThunkDispatch<TodosState, null, TodosActions>
+  dispatch: ThunkDispatch<ITodosState, null, TodosActions>
 ): ITodoListDispatches => ({
   getTodos: () => dispatch(getTodos()),
   toggleTodo: (id: number) => dispatch(toggleTodoAction(id))

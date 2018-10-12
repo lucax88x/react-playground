@@ -1,5 +1,5 @@
-import { TodosState } from './todos';
+import { ITodosState } from './todos';
 
 export class State {
-  public todos: TodosState;
+  public todos: ITodosState;
 }
