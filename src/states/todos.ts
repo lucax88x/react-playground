@@ -1,5 +1,6 @@
 import { TodoModel } from '../models/todo';
 
 export class TodosState {
-  public todoItems: TodoModel[] = [];
+  public isTodosBusy = false;
+  public todos: TodoModel[] = [];
 }

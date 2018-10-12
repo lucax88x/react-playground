@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 
 import App from './app';
 import rootReducer from './reducers';
@@ -15,7 +16,7 @@ const logger = createLogger({});
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(logger))
+  composeWithDevTools(applyMiddleware(logger, thunk))
 );
 
 ReactDOM.render(

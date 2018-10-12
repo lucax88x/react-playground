@@ -1,7 +1,13 @@
 import { map } from 'ramda';
 
 import { TodosActions } from '../actions';
-import { ADD_TODO, TOGGLE_TODO } from '../actions/todos';
+import {
+  ADD_TODO,
+  GET_TODOS,
+  GET_TODOS_ERROR,
+  GET_TODOS_SUCCESS,
+  TOGGLE_TODO
+} from '../actions/todos';
 import { TodosState } from '../states/todos';
 
 const todos = (state = new TodosState(), action: TodosActions): TodosState => {
@@ -9,27 +15,42 @@ const todos = (state = new TodosState(), action: TodosActions): TodosState => {
     case ADD_TODO:
       return {
         ...state,
-        todoItems: [
-          ...state.todoItems,
+        todos: [
+          ...state.todos,
           {
             completed: false,
             id: action.payload.id,
-            text: action.payload.text
+            title: action.payload.title
           }
         ]
       };
     case TOGGLE_TODO:
       return {
         ...state,
-        todoItems: map(
+        todos: map(
           todo =>
             todo.id === action.payload
               ? { ...todo, completed: !todo.completed }
               : todo,
-          state.todoItems
+          state.todos
         )
       };
-
+    case GET_TODOS:
+      return {
+        ...state,
+        isTodosBusy: true
+      };
+    case GET_TODOS_SUCCESS:
+      return {
+        ...state,
+        isTodosBusy: false,
+        todos: action.payload
+      };
+    case GET_TODOS_ERROR:
+      return {
+        ...state,
+        isTodosBusy: false
+      };
     default:
       return state;
   }

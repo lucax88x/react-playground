@@ -1,4 +1,4 @@
-import { addTodo, toggleTodo } from '../actions/todos';
+import { addTodoAction, toggleTodoAction } from '../actions/todos';
 import todos from './todos';
 
 describe('todos reducer', () => {
@@ -7,7 +7,15 @@ describe('todos reducer', () => {
   //   });
 
   it('should handle ADD_TODO', () => {
-    expect(todos({ todoItems: [] }, addTodo(0, 'Run the tests'))).toEqual([
+    expect(
+      todos(
+        {
+          isTodosBusy: false,
+          todos: []
+        },
+        addTodoAction(0, 'Run the tests')
+      )
+    ).toEqual([
       {
         completed: false,
         id: 0,
@@ -20,31 +28,32 @@ describe('todos reducer', () => {
     expect(
       todos(
         {
-          todoItems: [
+          isTodosBusy: false,
+          todos: [
             {
               completed: false,
               id: 1,
-              text: 'Run the tests'
+              title: 'Run the tests'
             },
             {
               completed: false,
               id: 0,
-              text: 'Use Redux'
+              title: 'Use Redux'
             }
           ]
         },
-        toggleTodo(1)
+        toggleTodoAction(1)
       )
     ).toEqual([
       {
         completed: true,
         id: 1,
-        text: 'Run the tests'
+        title: 'Run the tests'
       },
       {
         completed: false,
         id: 0,
-        text: 'Use Redux'
+        title: 'Use Redux'
       }
     ]);
   });

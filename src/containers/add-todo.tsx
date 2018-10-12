@@ -2,13 +2,15 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { TodosActions } from '../actions';
-import { addTodo } from '../actions/todos';
-import { AddTodo } from '../components/add-todo';
+import { addTodoAction } from '../actions/todos';
+import { AddTodo, IAddTodoDispatches } from '../components/add-todo';
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch<TodosActions>) => ({
-  addTodo: (value: string) => dispatch(addTodo(0, value))
+const mapDispatchToProps = (
+  dispatch: Dispatch<TodosActions>
+): IAddTodoDispatches => ({
+  addTodo: (value: string) => dispatch(addTodoAction(0, value))
 });
 
 export default connect(

@@ -4,27 +4,41 @@ import { TodoModel } from 'src/models/todo';
 
 import Todo from './todo';
 
-interface ITodoListPropTypes {
+export interface ITodoListProps {
+  isBusy: boolean;
   todos: TodoModel[];
-  toggleTodo: (id: number) => void;
 }
 
-// try to render using ramda map
-export class TodoList extends React.Component<ITodoListPropTypes> {
+export interface ITodoListDispatches {
+  toggleTodo: (id: number) => void;
+  getTodos: () => void;
+}
+
+export class TodoList extends React.Component<
+  ITodoListProps & ITodoListDispatches
+> {
   public render() {
     return (
-      <ul>
-        {map(
-          todo => (
-            <Todo key={todo.id} {...todo} onClick={this.onClick} />
-          ),
-          this.props.todos
-        )}
-      </ul>
+      <div>
+        <button onClick={this.onRefresh}>Refresh</button>        
+        <p>IsBusy: {this.props.isBusy}</p>
+        <ul>
+          {map(
+            todo => (
+              <Todo key={todo.id} {...todo} onClick={this.onToggle} />
+            ),
+            this.props.todos
+          )}
+        </ul>
+      </div>
     );
   }
 
-  private onClick = (id: number) => {
+  private onRefresh = () => {
+    this.props.getTodos();
+  };
+
+  private onToggle = (id: number) => {
     this.props.toggleTodo(id);
   };
 }

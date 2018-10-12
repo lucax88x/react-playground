@@ -4,7 +4,7 @@ interface ITodoPropTypes {
   onClick: (id: number) => void;
   id: number;
   completed: boolean;
-  text: string;
+  title: string;
 }
 
 export class Todo extends React.Component<ITodoPropTypes> {
@@ -16,7 +16,7 @@ export class Todo extends React.Component<ITodoPropTypes> {
           textDecoration: this.props.completed ? 'line-through' : 'none'
         }}
       >
-        {this.props.text}
+        {this.props.title}
       </li>
     );
   }

@@ -1,11 +1,11 @@
 import React, { FormEvent } from 'react';
 
-interface IAddTodoPropTypes {
+export interface IAddTodoDispatches {
   addTodo: (value: string) => void;
 }
 
 // better way to ref the node?
-export class AddTodo extends React.Component<IAddTodoPropTypes> {
+export class AddTodo extends React.Component<IAddTodoDispatches> {
   private input: HTMLInputElement | null;
 
   public render() {
