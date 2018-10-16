@@ -1,7 +1,7 @@
 import { map } from 'ramda';
 import React from 'react';
-import { TodoModel } from 'src/models/todo';
 
+import { TodoModel } from '../models/todo';
 import Todo from './todo';
 
 export interface ITodoListProps {
@@ -12,6 +12,7 @@ export interface ITodoListProps {
 export interface ITodoListDispatches {
   toggleTodo: (id: number) => void;
   getTodos: () => void;
+  getTodosAsSaga: () => void;
 }
 
 export class TodoList extends React.Component<
@@ -20,7 +21,8 @@ export class TodoList extends React.Component<
   public render() {
     return (
       <div>
-        <button onClick={this.onRefresh}>Refresh</button>        
+        <button onClick={this.onRefresh}>Refresh</button>
+        <button onClick={this.onRefreshAsSaga}>Refresh as Saga</button>
         <p>IsBusy: {this.props.isBusy.toString()}</p>
         <ul>
           {map(
@@ -36,6 +38,10 @@ export class TodoList extends React.Component<
 
   private onRefresh = () => {
     this.props.getTodos();
+  };
+
+  private onRefreshAsSaga = () => {
+    this.props.getTodosAsSaga();
   };
 
   private onToggle = (id: number) => {

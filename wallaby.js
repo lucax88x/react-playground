@@ -1,7 +1,7 @@
 // tslint:disable
 
 module.exports = function(wallaby) {
-    const testPathExp = 'src/**/*.test.ts?(x)';
+    const testPathExp = 'src/**/*.spec.ts?(x)';
   
     return {
       files: [

@@ -1,7 +1,5 @@
 import { inject, injectable } from 'inversify';
 import { ThunkDispatch } from 'redux-thunk';
-import { ITodoApi } from 'src/apis/interfaces';
-import { TYPES } from 'src/inversify.types';
 
 import { TodosActions } from '../actions';
 import {
@@ -9,6 +7,8 @@ import {
   getTodosErrorAction,
   getTodosSuccessAction
 } from '../actions/todos';
+import { ITodoApi } from '../apis/interfaces';
+import { TYPES } from '../inversify.types';
 import { ITodosState } from '../states/todos';
 
 @injectable()

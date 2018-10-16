@@ -5,6 +5,9 @@ import { TodosActions } from '../actions';
 import {
   ADD_TODO,
   GET_TODOS,
+  GET_TODOS_AS_SAGA,
+  GET_TODOS_AS_SAGA_ERROR,
+  GET_TODOS_AS_SAGA_SUCCESS,
   GET_TODOS_ERROR,
   GET_TODOS_SUCCESS,
   TOGGLE_TODO
@@ -39,15 +42,20 @@ const todos = (state = initialTodosState, action: TodosActions): ITodosState =>
           )
         };
       case GET_TODOS:
+      case GET_TODOS_AS_SAGA:
         draft.isTodosBusy = true;
         return;
       case GET_TODOS_SUCCESS:
+      case GET_TODOS_AS_SAGA_SUCCESS:
         draft.isTodosBusy = false;
         draft.todos = action.payload;
         return;
       case GET_TODOS_ERROR:
+      case GET_TODOS_AS_SAGA_ERROR:
         draft.isTodosBusy = false;
         return;
+      default:
+        return initialTodosState;
     }
   });
 

@@ -1,5 +1,4 @@
 # TODO
 
-- inversifyjs
+- TEST containers of inversify
 - react-saga or react-observable
-- wallabyjs

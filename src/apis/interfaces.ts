@@ -1,4 +1,4 @@
-import { TodoModel } from 'src/models/todo';
+import { TodoModel } from '../models/todo';
 
 export interface ITodoApi {
   get(): Promise<TodoModel[]>;
