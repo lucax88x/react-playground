@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { injectable } from 'inversify';
 import { Observable } from 'rxjs';
-import { rxios } from 'src/code/rxios';
 
+import { rxios } from '../code/rxios';
 import { TodoModel } from '../models/todo';
 import { ITodoApi } from './interfaces';
 

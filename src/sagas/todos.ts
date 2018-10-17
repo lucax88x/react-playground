@@ -5,6 +5,7 @@ import {
   getTodosAsSagaErrorAction,
   getTodosAsSagaSuccessAction
 } from 'src/actions/todos';
+import { TodoModel } from 'src/models/todo';
 
 import { ITodoApi } from '../apis/interfaces';
 import { TYPES } from '../inversify.types';
@@ -15,12 +16,16 @@ export class TodosSaga {
 
   public *getTodos(action: TodosActions) {
     try {
-      const data = yield call(this.todoApi.get, null);
+      const data = yield call<TodoModel[]>(this.todoApi.get, []);
 
       yield put(getTodosAsSagaSuccessAction(data));
     } catch (e) {
       yield put(getTodosAsSagaErrorAction());
+    } finally {
+      // handle axios cancel here
+      // if (yield cancelled()) {
+      //   yield put(actions.requestFailure('Sync cancelled!'));
+      // }
     }
-    // for handling cancellation, study https://stackoverflow.com/questions/50078589/cancel-of-requests-through-saga
   }
 }

@@ -15,13 +15,16 @@ describe('todos reducer', () => {
         },
         addTodoAction(0, 'Run the tests')
       )
-    ).toEqual([
-      {
-        completed: false,
-        id: 0,
-        text: 'Run the tests'
-      }
-    ]);
+    ).toEqual({
+      isTodosBusy: false,
+      todos: [
+        {
+          completed: false,
+          id: 0,
+          title: 'Run the tests'
+        }
+      ]
+    });
   });
 
   it('should handle TOGGLE_TODO', () => {
@@ -44,17 +47,20 @@ describe('todos reducer', () => {
         },
         toggleTodoAction(1)
       )
-    ).toEqual([
-      {
-        completed: true,
-        id: 1,
-        title: 'Run the tests'
-      },
-      {
-        completed: false,
-        id: 0,
-        title: 'Use Redux'
-      }
-    ]);
+    ).toEqual({
+      isTodosBusy: false,
+      todos: [
+        {
+          completed: true,
+          id: 1,
+          title: 'Run the tests'
+        },
+        {
+          completed: false,
+          id: 0,
+          title: 'Use Redux'
+        }
+      ]
+    });
   });
 });
