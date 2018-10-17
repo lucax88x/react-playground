@@ -13,6 +13,7 @@ export interface ITodoListDispatches {
   toggleTodo: (id: number) => void;
   getTodos: () => void;
   getTodosAsSaga: () => void;
+  getTodosAsEpic: () => void;
 }
 
 export class TodoList extends React.Component<
@@ -23,6 +24,7 @@ export class TodoList extends React.Component<
       <div>
         <button onClick={this.onRefresh}>Refresh</button>
         <button onClick={this.onRefreshAsSaga}>Refresh as Saga</button>
+        <button onClick={this.onRefreshAsEpic}>Refresh as Epic</button>
         <p>IsBusy: {this.props.isBusy.toString()}</p>
         <ul>
           {map(
@@ -42,6 +44,10 @@ export class TodoList extends React.Component<
 
   private onRefreshAsSaga = () => {
     this.props.getTodosAsSaga();
+  };
+
+  private onRefreshAsEpic = () => {
+    this.props.getTodosAsEpic();
   };
 
   private onToggle = (id: number) => {

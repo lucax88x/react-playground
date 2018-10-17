@@ -2,7 +2,11 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 
 import { TodosActions } from '../actions';
-import { getTodosAsSagaAction, toggleTodoAction } from '../actions/todos';
+import {
+  getTodosAsEpicAction,
+  getTodosAsSagaAction,
+  toggleTodoAction
+} from '../actions/todos';
 import {
   ITodoListDispatches,
   ITodoListProps,
@@ -26,6 +30,7 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<ITodosState, null, TodosActions>
 ): ITodoListDispatches => ({
   getTodos: () => dispatch(todosThunks.getTodos()),
+  getTodosAsEpic: () => dispatch(getTodosAsEpicAction()),
   getTodosAsSaga: () => dispatch(getTodosAsSagaAction()),
   toggleTodo: (id: number) => dispatch(toggleTodoAction(id))
 });

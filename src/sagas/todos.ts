@@ -21,5 +21,6 @@ export class TodosSaga {
     } catch (e) {
       yield put(getTodosAsSagaErrorAction());
     }
+    // for handling cancellation, study https://stackoverflow.com/questions/50078589/cancel-of-requests-through-saga
   }
 }
