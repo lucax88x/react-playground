@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
 import { call, put } from 'redux-saga/effects';
-import { TodosActions } from 'src/actions';
+import { TodosActions } from '../actions';
 import {
   getTodosAsSagaErrorAction,
   getTodosAsSagaSuccessAction
-} from 'src/actions/todos';
-import { TodoModel } from 'src/models/todo';
+} from '../actions/todos';
+import { TodoModel } from '../models/todo';
 
 import { ITodoApi } from '../apis/interfaces';
 import { TYPES } from '../inversify.types';

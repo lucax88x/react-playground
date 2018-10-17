@@ -1,44 +1,64 @@
-import configureMockStore from 'redux-mock-store';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { TodosActions } from 'src/actions';
-import {
-  GET_TODOS_AS_SAGA,
-  GET_TODOS_AS_SAGA_SUCCESS
-} from 'src/actions/todos';
-import { container } from 'src/inversify.config';
-import { TYPES } from 'src/inversify.types';
 import { ITodosState } from 'src/states/todos';
-import { getThunkAction } from 'src/test/thunk.helpers';
 
+import { GET_TODOS_ERROR, GET_TODOS_SUCCESS } from '../actions/todos';
+import { container } from '../inversify.config';
+import { TYPES } from '../inversify.types';
 import { TodosThunks } from './todos';
 
-export const mockStore = configureMockStore<
+const axiosMock = new MockAdapter(axios);
+const mockThunkStoreCreator = configureMockStore<
   ITodosState,
   ThunkDispatch<ITodosState, null, TodosActions>
 >([thunk]);
 
 describe('TodosThunks', () => {
+  let thunkStore: MockStoreEnhanced<
+    ITodosState,
+    ThunkDispatch<ITodosState, null, TodosActions>
+  >;
   let todosThunks: TodosThunks;
+
   beforeEach(() => {
     todosThunks = container.get<TodosThunks>(TYPES.TodosThunks);
+    thunkStore = mockThunkStoreCreator();
   });
 
   describe('getTodos', () => {
     it('fetches all todos ', async () => {
-      const store = mockStore();
+      // ARRANGE
+      const items = [{ id: 1, name: 'John Smith' }];
 
-      // 1stway
-      await store.dispatch(todosThunks.getTodos());
+      axiosMock
+        .onGet('https://jsonplaceholder.typicode.com/todos')
+        .reply(200, items);
 
-      // 2nd way
-      store.dispatch(todosThunks.getTodos());
+      // ACT
+      const action = await thunkStore.dispatch(todosThunks.getTodos());
 
-      expect(await getThunkAction(store, GET_TODOS_AS_SAGA)).toEqual({
-        type: GET_TODOS_AS_SAGA
+      // ASSERT
+      expect(action).toEqual({
+        payload: items,
+        type: GET_TODOS_SUCCESS
       });
-      expect(await getThunkAction(store, GET_TODOS_AS_SAGA_SUCCESS)).toEqual({
-        items: [],
-        type: GET_TODOS_AS_SAGA_SUCCESS
+    });
+
+    it('fetches all todos ', async () => {
+      // ARRANGE
+      axiosMock
+        .onGet('https://jsonplaceholder.typicode.com/todos')
+        .networkError();
+
+      // ACT
+      const action = await thunkStore.dispatch(todosThunks.getTodos());
+
+      // ASSERT
+      expect(action).toEqual({
+        type: GET_TODOS_ERROR
       });
     });
   });

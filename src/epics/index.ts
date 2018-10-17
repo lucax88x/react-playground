@@ -1,6 +1,6 @@
 import { combineEpics } from 'redux-observable';
-import { container } from 'src/inversify.config';
-import { TYPES } from 'src/inversify.types';
+import { container } from '../inversify.config';
+import { TYPES } from '../inversify.types';
 
 import { TodosEpic } from './todos';
 

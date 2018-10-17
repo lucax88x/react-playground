@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga/effects';
-import { GET_TODOS_AS_SAGA } from 'src/actions/todos';
-import { container } from 'src/inversify.config';
-import { TYPES } from 'src/inversify.types';
+import { GET_TODOS_AS_SAGA } from '../actions/todos';
+import { container } from '../inversify.config';
+import { TYPES } from '../inversify.types';
 
 import { TodosSaga } from './todos';
 
