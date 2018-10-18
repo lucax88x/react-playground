@@ -1,4 +1,7 @@
 # TODO
 
-- TEST containers of inversify
-- react-saga or react-observable
+- test containers of inversify
+- test components enzyme ?
+- routing
+- modules?
+- component css?

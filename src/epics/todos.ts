@@ -21,10 +21,7 @@ export class TodosEpic {
     return [this.getTodos];
   }
 
-  private getTodos: Epic<TodosActions, TodosActions, ITodosState> = (
-    action$,
-    state
-  ) =>
+  public getTodos: Epic<TodosActions, TodosActions, ITodosState> = action$ =>
     action$.ofType(GET_TODOS_AS_EPIC).pipe(
       switchMap(_ =>
         this.todoApi.getAsObservable().pipe(

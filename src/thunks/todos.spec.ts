@@ -47,12 +47,12 @@ describe('TodosThunks', () => {
       });
     });
 
-    it('fetches all todos ', async () => {
+    it('gets error when cannot fetch ', async () => {
       // ARRANGE
       axiosMock
         .onGet('https://jsonplaceholder.typicode.com/todos')
         .networkError();
-
+      
       // ACT
       const action = await thunkStore.dispatch(todosThunks.getTodos());
 

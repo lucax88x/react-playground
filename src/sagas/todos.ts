@@ -1,20 +1,19 @@
 import { inject, injectable } from 'inversify';
 import { call, put } from 'redux-saga/effects';
-import { TodosActions } from '../actions';
+
 import {
   getTodosAsSagaErrorAction,
   getTodosAsSagaSuccessAction
 } from '../actions/todos';
-import { TodoModel } from '../models/todo';
-
 import { ITodoApi } from '../apis/interfaces';
 import { TYPES } from '../inversify.types';
+import { TodoModel } from '../models/todo';
 
 @injectable()
 export class TodosSaga {
   public constructor(@inject(TYPES.ITodoApi) private todoApi: ITodoApi) {}
 
-  public *getTodos(action: TodosActions) {
+  public *getTodos() {
     try {
       const data = yield call<TodoModel[]>(this.todoApi.get, []);
 
