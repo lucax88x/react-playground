@@ -1,18 +1,17 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent } from "react";
 
 export interface IAddTodoDispatches {
   addTodo: (value: string) => void;
 }
 
-// better way to ref the node?
 export class AddTodo extends React.Component<IAddTodoDispatches> {
-  private input: HTMLInputElement | null;
+  private input: React.RefObject<HTMLInputElement> = React.createRef();
 
   public render() {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          <input ref={node => (this.input = node)} />
+          <input ref={this.input} />
           <button type="submit">Add Todo</button>
         </form>
       </div>
@@ -21,8 +20,8 @@ export class AddTodo extends React.Component<IAddTodoDispatches> {
 
   public onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!!this.input) {
-      this.props.addTodo(this.input.value);
+    if (!!this.input.current) {
+      this.props.addTodo(this.input.current.value);
     }
   };
 }
